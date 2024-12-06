@@ -47,9 +47,5 @@ public class Day1 implements Day {
         }
 
         System.out.println(similarity);
-
-        while(true) {
-            
-        }
     }
 }
