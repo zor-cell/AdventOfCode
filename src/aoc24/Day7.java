@@ -50,7 +50,7 @@ public class Day7 implements Day {
             for(String op : operators) {
                 boolean found = calculate(res, num, op, 0, new BigInteger("0"));
                 if(found) {
-                    count = count.add(new BigInteger(String.valueOf(res)));
+                    count = count.add(res);
                     break;
                 }
             }
