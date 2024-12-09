@@ -53,7 +53,7 @@ public class Day9 implements Day {
         }
 
         List<Integer> ids = new ArrayList<>();
-        List<FileSize> sizes = new ArrayList<>();
+        List<FileSize> sizes = new ArrayList<>(); //for part 2
         for(int i = 0;i < compressed.size();i++) {
             String s = compressed.get(i);
             int id = 0;
