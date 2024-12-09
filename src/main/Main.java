@@ -9,11 +9,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
        try {
-           Day currentDay = new Day8();
+           Day currentDay = new Day9();
            String classString = currentDay.getClass().toString();
            String dayAsString = classString.substring(classString.lastIndexOf('.') + 1).toLowerCase();
 
-           File file = new File("input/"+ dayAsString + ".txt");
+           File file = new File("input/aoc24/"+ dayAsString + ".txt");
            Scanner scanner = new Scanner(file);
 
            currentDay.run(scanner);
