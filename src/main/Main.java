@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
        try {
-           Day currentDay = new Day9();
+           Day currentDay = new Day10();
            String classString = currentDay.getClass().toString();
            String dayAsString = classString.substring(classString.lastIndexOf('.') + 1).toLowerCase();
 

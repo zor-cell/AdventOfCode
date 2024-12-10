@@ -3,10 +3,7 @@ package aoc24;
 import main.Day;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Day9 implements Day {
     class FileSize implements Comparable {
@@ -21,8 +18,8 @@ public class Day9 implements Day {
         @Override
         public int compareTo(Object o) {
             if(o instanceof FileSize other) {
-                //first id, then size
-                return size - other.size;
+                //id desc ordering
+                return other.id - id;
             }
 
             return 0;
@@ -70,26 +67,57 @@ public class Day9 implements Day {
                 }
             }
         }
+        sizes.sort(FileSize::compareTo);
 
-        List<Integer> allMoved = new ArrayList<>();
-        int l = 0;
-        int r = ids.size() - 1;
-        int size = 0;
-        while(l <= r) {
-            if(ids.get(l) > -1) {
-                if(size > 0) {
-                    //allocate batch
+        while(!sizes.isEmpty()) {
+            for(int i = 0;i < sizes.size();i++) {
+                FileSize cur = sizes.get(i);
 
-                    size = 0;
+                int size = 0;
+                int j = 0;
+                boolean found = false;
+                while(j < ids.size()) {
+                    if (ids.get(j) == -1) {
+                        size++;
+                        j++;
+                        continue;
+                    } else {
+                        if(ids.get(j).equals(cur.id)) break; //index is more to the right than already
+                    }
+
+                    if(size > 0) {
+                        if(cur.size <= size) {
+                            for(int k = 0;k < ids.size();k++) {
+                                if(ids.get(k).equals(cur.id)) {
+                                    ids.set(k, -1); //remove ids
+                                }
+                            }
+
+                            //add ids on the left
+                            int startJ = j - size;
+                            for(int k = startJ;k < startJ + cur.size;k++) {
+                                ids.set(k, cur.id);
+                            }
+
+                            found = true;
+                            break;
+                        } else size = 0;
+                    }
+
+                    j++;
                 }
 
-                allMoved.add(ids.get(l));
-                l++;
-            } else {
-                size++;
+                if(found) {
+                    sizes.remove(i); //remove from sizes
+                    break;
+                } else {
+                    sizes.remove(i); //remove from sizes
+                    break;
+                }
             }
         }
 
+        //part 1
         /*
                 int l = 0;
         int r = ids.size() - 1;
@@ -111,13 +139,14 @@ public class Day9 implements Day {
          */
 
         BigInteger checksum = BigInteger.ZERO;
-        for(int i = 0;i < allMoved.size();i++) {
+        for(int i = 0;i < ids.size();i++) {
+            if(ids.get(i).equals(-1)) continue;
+
             BigInteger index = new BigInteger(String.valueOf(i));
-            BigInteger id = new BigInteger(String.valueOf(allMoved.get(i)));
+            BigInteger id = new BigInteger(String.valueOf(ids.get(i)));
             BigInteger cur = index.multiply(id);
             checksum = checksum.add(cur);
         }
-
         System.out.println(checksum);
     }
 
