@@ -99,6 +99,7 @@ public class Day10 implements Day {
                     //if(!reached.contains(neighbor)) sum++;
                     //reached.add(neighbor);
 
+                    //part 2
                     sum++;
                 } else {
                     sum += dfs(map, reached, neighbor);
